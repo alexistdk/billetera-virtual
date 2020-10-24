@@ -1,6 +1,7 @@
 import os
 from getpass import getpass
 from DDBBusuario import *
+from Menu import *
 
 
 class Usuario:
@@ -12,7 +13,14 @@ class Usuario:
         email = input("Email: ")
         contrasenia = getpass(prompt="Contraseña: ")
         if DDBBusuario.loguear_usuario(email, contrasenia):
-            print("# TODO")
+            if DDBBusuario.tiene_pin(email) is not None:
+                os.system('clear')
+                cls.agregar_pin(email)
+                Menu.menu_principal()
+                Menu.elegir_opcion()
+            else:
+                Menu.menu_principal()
+                Menu.elegir_opcion()
         else:
             input("Usuario y/o contraseña incorrectos. Intente nuevamente.")
             cls.pantalla_principal()
@@ -49,3 +57,14 @@ class Usuario:
         else:
             input("Opción inválida. Intente nuevamente.")
             cls.pantalla_principal()
+
+    @classmethod
+    def agregar_pin(cls, email):
+        print("Solo se le pedirá el pin para confirmar las operaciones")
+        pin = int(input("Pin: "))
+        reingresa_pin = int(input("Reingresar pin: "))
+        if pin is reingresa_pin:
+            DDBBusuario.agregar_pin(email, pin)
+        else:
+            input("Los pin no coinciden. Intente nuevamente")
+            cls.agregar_pin(email)

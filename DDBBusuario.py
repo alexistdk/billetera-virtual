@@ -19,10 +19,9 @@ class DDBBusuario(ConectarDDBB):
             db = cls.conexion()
             cursor = db.cursor()
             cursor.callproc('RegistrarUsuario', [email, password, telefono])
+            db.commit()
         except Error:
             print("Error", Error)
-        finally:
-            db.commit()
 
     @classmethod
     def email_registrado(cls, email):
@@ -39,7 +38,25 @@ class DDBBusuario(ConectarDDBB):
         try:
             db = cls.conexion()
             cursor = db.cursor()
-            existe_telefono = cursor.callproc('ExisteTelefono', [telefono])
-            return existe_telefono[0]
+            existe = cursor.callproc('ExisteTelefono', [telefono])
+            return existe[0]
+        except Error:
+            print("Error", Error)
+
+    @classmethod
+    def tiene_pin(cls, email):
+        try:
+            db = cls.conexion()
+            cursor = db.cursor()
+            return cursor.callproc('ExistePin', [email])[0]
+        except Error:
+            print("Error", Error)
+
+    @classmethod
+    def agregar_pin(cls, email, pin):
+        try:
+            db = cls.conexion()
+            cursor = db.cursor()
+            return cursor.callproc('AgregarPin', [email, pin])[0]
         except Error:
             print("Error", Error)
