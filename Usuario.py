@@ -59,8 +59,8 @@ class Usuario:
     def agregar_pin(cls, email):
         os.system('clear')
         print("Solo se le pedirá el pin para confirmar las operaciones")
-        pin = int(input("Pin: "))
-        reingresa_pin = int(input("Reingresar pin: "))
+        pin = getpass(prompt="Pin: ")
+        reingresa_pin = getpass(prompt="Reingresar pin: ")
         if pin == reingresa_pin:
             DDBBusuario.agregar_pin(email, pin)
         else:
