@@ -1,5 +1,5 @@
 import os
-from Operacion import *
+from Operaciones import *
 
 
 class Menu:
@@ -19,16 +19,16 @@ class Menu:
     def elegir_opcion(cls):
         opcion = int(input("\nElija una opción: "))
         if opcion == 1:
-            Operacion.pagar()
+            Operaciones.pagar()
             cls.volver_al_menu()
-        if opcion == 2:
-            Operacion.transferir()
+        elif opcion == 2:
+            Operaciones.transferir()
             cls.volver_al_menu()
-        if opcion == 3:
-            Operacion.ingresar_dinero()
+        elif opcion == 3:
+            Operaciones.ingresar_dinero()
             cls.volver_al_menu()
-        if opcion == 4:
-            Operacion.mostrar_operaciones()
+        elif opcion == 4:
+            Operaciones.mostrar_operaciones()
             cls.volver_al_menu()
         else:
             input("Opción incorrecta. Presione cualquier tecla para ingresar una opción válida")

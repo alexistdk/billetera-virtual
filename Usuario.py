@@ -2,6 +2,7 @@ import os
 from getpass import getpass
 from DDBBusuario import *
 from Menu import *
+from Operaciones import *
 
 
 class Usuario:

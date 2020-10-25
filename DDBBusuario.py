@@ -1,4 +1,5 @@
 from ConectarDDBB import *
+from Operaciones import *
 
 
 class DDBBusuario(ConectarDDBB):
@@ -50,5 +51,16 @@ class DDBBusuario(ConectarDDBB):
             cursor = db.cursor()
             cursor.execute('CALL ExisteUsuario(%s, %s)', [email, telefono])
             return cursor.fetchone()[0]
+        except Error:
+            print("Error", Error)
+
+    @classmethod
+    def get_id_usuario(cls, email):
+        try:
+            db = cls.conexion()
+            cursor = db.cursor()
+            cursor.execute('CALL GetID(%s)', [email])
+            id_usuario = cursor.fetchone()[0]
+            Operaciones.usuario_logueado(id_usuario)
         except Error:
             print("Error", Error)
