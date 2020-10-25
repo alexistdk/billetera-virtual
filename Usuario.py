@@ -13,8 +13,7 @@ class Usuario:
         email = input("Email: ")
         contrasenia = getpass(prompt="Contraseña: ")
         if DDBBusuario.loguear_usuario(email, contrasenia):
-            if DDBBusuario.tiene_pin(email) is not None:
-                os.system('clear')
+            if DDBBusuario.tiene_pin(email) is None:
                 cls.agregar_pin(email)
                 Menu.menu_principal()
                 Menu.elegir_opcion()
@@ -30,18 +29,16 @@ class Usuario:
         os.system('clear')
         print("Registrar usuario\n")
         email = input("Email: ")
+        telefono = input("Telefono: ")
         password = getpass(prompt="Contraseña: ")
         password_reingresada = getpass(prompt="Reingrese la contraseña: ")
-        telefono = input("Telefono: ")
         if password == password_reingresada:
-            if not DDBBusuario.email_registrado(email) and not DDBBusuario.telefono_registrado(telefono):
+            if not DDBBusuario.existe_usuario(email, telefono):
                 DDBBusuario.registrar_usuario(email, password, telefono)
-            elif DDBBusuario.email_registrado(email) and not DDBBusuario.telefono_registrado(telefono):
-                input("Email ya registrado. Por favor, inicie sesión")
-            elif not DDBBusuario.email_registrado(email) and DDBBusuario.telefono_registrado(telefono):
-                input("Telefono ya registrado. Por favor, inicie sesión")
+                input("Se registró correctamente. Por favor, inicie sesión.")
+                cls.pantalla_principal()
             else:
-                input("Email y teléfono ya registrado. Por favor, inicie sesión")
+                input("Email y/p teléfono ya registrado. Por favor, inicie sesión")
                 cls.pantalla_principal()
 
     @classmethod
@@ -60,10 +57,11 @@ class Usuario:
 
     @classmethod
     def agregar_pin(cls, email):
+        os.system('clear')
         print("Solo se le pedirá el pin para confirmar las operaciones")
         pin = int(input("Pin: "))
         reingresa_pin = int(input("Reingresar pin: "))
-        if pin is reingresa_pin:
+        if pin == reingresa_pin:
             DDBBusuario.agregar_pin(email, pin)
         else:
             input("Los pin no coinciden. Intente nuevamente")
