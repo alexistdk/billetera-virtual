@@ -60,3 +60,13 @@ class DDBBoperacion(ConectarDDBB):
                 print("Importe: ", row[3])
         except Error:
             print("Error", Error)
+
+    @classmethod
+    def transferencia(cls, id_usuario, cantidad, destinatario):
+        fecha = date.today()
+        try:
+            db = cls.conexion()
+            cursor = db.cursor()
+            cursor.execute("CALL Transferir(%s, %s, %s, %s)", [id_usuario, cantidad, destinatario, fecha])
+        except Error:
+            print("Error", Error)

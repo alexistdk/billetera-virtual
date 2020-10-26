@@ -2,6 +2,7 @@ from os import system
 from DDBBoperacion import *
 from Menu import *
 from getpass import getpass
+from DDBBusuario import *
 
 
 class Operaciones:
@@ -29,7 +30,16 @@ class Operaciones:
             input("Pin incorrecto")
 
     @classmethod
-    def transferir(cls): print("Transferir")
+    def transferir(cls):
+        system('clear')
+        print('Transferir plata\n')
+        cantidad = int(input("Importe: "))
+        destinatario = input("Email o teléfono del destinatario: ")
+        pin = int(input("Pin: "))
+        if DDBBoperacion.confirma_pin(pin):
+            DDBBoperacion.transferencia(cls.id_usuario(), cantidad, DDBBusuario.get_id_usuario(destinatario))
+        else:
+            input("Pin incorrecto")
 
     @classmethod
     def ingresar_dinero(cls):
