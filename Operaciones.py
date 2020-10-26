@@ -43,4 +43,7 @@ class Operaciones:
             input("Pin incorrecto")
 
     @classmethod
-    def mostrar_operaciones(cls): print("Mostrar operaciones")
+    def mostrar_operaciones(cls):
+        system('clear')
+        print("Operaciones realizadas\n")
+        DDBBoperacion.listar_operaciones(cls.id_usuario())
